@@ -1,13 +1,14 @@
+pub mod error;
 pub mod interval;
 pub mod policy;
 
 use std::str::FromStr;
 
-pub fn solve(input: &Vec<&str>) -> usize {
+pub fn solve(input: &[&str]) -> usize {
     input
         .iter()
         .map(|i| {
-            let split: Vec<&str> = i.split(":").collect();
+            let split: Vec<&str> = i.split(':').collect();
             let policy = policy::Policy::from_str(split[0]).unwrap();
             let data = split[1];
             (policy, data)
