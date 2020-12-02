@@ -82,7 +82,7 @@ impl Interval {
 }
 
 #[test]
-fn interval_from_str_valid() {
+fn from_str_valid() {
     let input = "1-2";
     let expected = Ok(Interval { min: 1, max: 2 });
     let result = Interval::from_str(input);
@@ -90,7 +90,7 @@ fn interval_from_str_valid() {
 }
 
 #[test]
-fn interval_from_str_wrong_order() {
+fn from_str_wrong_order() {
     let input = "2-1";
     let expected = Err(ParseIntervalError::WrongComponentOrder);
     let result = Interval::from_str(input);
@@ -98,7 +98,7 @@ fn interval_from_str_wrong_order() {
 }
 
 #[test]
-fn interval_from_str_wrong_format() {
+fn from_str_wrong_format() {
     let input = "2+1";
     let result = Interval::from_str(input);
 
@@ -109,7 +109,7 @@ fn interval_from_str_wrong_format() {
 }
 
 #[test]
-fn interval_from_str_wrong_number() {
+fn from_str_wrong_number() {
     let input = "1-2-3";
     let expected = Err(ParseIntervalError::WrongComponentNumber);
     let result = Interval::from_str(input);
