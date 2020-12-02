@@ -68,6 +68,19 @@ impl FromStr for Interval {
     }
 }
 
+impl Interval {
+    pub fn new(min: u32, max: u32) -> Result<Self, ParseIntervalError> {
+        if min <= max {
+            return Ok(Self { min, max });
+        }
+        Err(ParseIntervalError::WrongComponentOrder)
+    }
+
+    pub fn contains(&self, other: u32) -> bool {
+        self.min <= other && other <= self.max
+    }
+}
+
 #[test]
 fn interval_from_str_valid() {
     let input = "1-2";
@@ -106,4 +119,21 @@ fn interval_from_str_wrong_number() {
     let expected = Err(ParseIntervalError::WrongComponentNumber);
     let result = Interval::from_str(input);
     assert_eq!(expected, result);
+}
+
+#[test]
+fn contains() {
+    let interval = Interval::new(10, 12).unwrap();
+
+    let expected = vec![false, true, false];
+    let results = vec![
+        interval.contains(9),
+        interval.contains(11),
+        interval.contains(13),
+    ];
+
+    expected
+        .iter()
+        .zip(results.iter())
+        .for_each(|(a, b)| assert_eq!(a, b));
 }
