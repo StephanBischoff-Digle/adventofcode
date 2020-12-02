@@ -10,8 +10,11 @@ pub struct Policy {
 
 impl Policy {
     pub fn apply(&self, input: &str) -> bool {
-        self.interval
-            .contains(input.chars().filter(|x| x == &self.symbol).count() as u32)
+        1 == input
+            .chars()
+            .enumerate()
+            .filter(|(idx, c)| self.interval.is_at_bound(1 + *idx as u32) && c == &self.symbol)
+            .count()
     }
 }
 

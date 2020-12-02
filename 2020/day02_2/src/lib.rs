@@ -10,7 +10,7 @@ pub fn solve(input: &[&str]) -> usize {
         .map(|i| {
             let split: Vec<&str> = i.split(':').collect();
             let policy = policy::Policy::from_str(split[0]).unwrap();
-            let data = split[1];
+            let data = split[1].trim();
             (policy, data)
         })
         .filter(|(policy, data)| policy.apply(data))
@@ -20,5 +20,5 @@ pub fn solve(input: &[&str]) -> usize {
 #[test]
 fn aoc_example() {
     let input = vec!["1-3 a: abcde", "1-3 b: cdefg", "2-9 c: ccccccccc"];
-    assert_eq!(2, solve(&input));
+    assert_eq!(1, solve(&input));
 }
