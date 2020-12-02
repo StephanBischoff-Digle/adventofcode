@@ -44,6 +44,10 @@ impl Interval {
     pub fn contains(&self, other: u32) -> bool {
         self.min <= other && other <= self.max
     }
+
+    pub fn is_at_bound(&self, other: u32) -> bool {
+        self.min == other || self.max == other
+    }
 }
 
 #[test]
@@ -95,6 +99,23 @@ fn contains() {
         interval.contains(9),
         interval.contains(11),
         interval.contains(13),
+    ];
+
+    expected
+        .iter()
+        .zip(results.iter())
+        .for_each(|(a, b)| assert_eq!(a, b));
+}
+
+#[test]
+fn is_at_bound() {
+    let interval = Interval::new(10, 12).unwrap();
+
+    let expected = vec![true, false, true];
+    let results = vec![
+        interval.is_at_bound(10),
+        interval.is_at_bound(11),
+        interval.is_at_bound(12),
     ];
 
     expected
