@@ -43,6 +43,13 @@ pub struct Policy {
     symbol: char,
 }
 
+impl Policy {
+    pub fn apply(&self, input: &str) -> bool {
+        self.interval
+            .contains(input.chars().filter(|x| x == &self.symbol).count() as u32)
+    }
+}
+
 impl FromStr for Policy {
     type Err = ParsePolicyError;
 
@@ -99,4 +106,26 @@ fn from_str_format() {
     let result = Policy::from_str(input);
     let expected = Err(ParsePolicyError::FormatError);
     assert_eq!(expected, result);
+}
+
+#[test]
+fn apply_accept() {
+    let input = "abcde";
+    let policy = Policy {
+        interval: Interval::new(1, 3).unwrap(),
+        symbol: 'a',
+    };
+
+    assert!(policy.apply(input));
+}
+
+#[test]
+fn apply_reject() {
+    let input = "bcde";
+    let policy = Policy {
+        interval: Interval::new(1, 3).unwrap(),
+        symbol: 'a',
+    };
+
+    assert!(!policy.apply(input));
 }
