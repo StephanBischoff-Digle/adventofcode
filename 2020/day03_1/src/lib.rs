@@ -27,8 +27,7 @@ fn aoc_example() {
 #...##....#
 .#..#...#.#";
 
-    let field = Field::from_str(input).unwrap();
-    let result = field.iter(3, 1).filter(|x| *x).count();
+    let result = solve(input, 3, 1);
 
     let expected = 7;
     assert_eq!(expected, result);
