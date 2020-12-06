@@ -23,15 +23,18 @@ fn main() {
     let input = fs::read_to_string("data.yml").expect("Failed to read input file");
     let data: BTreeMap<u32, BTreeMap<usize, Vec<Part>>> = serde_yaml::from_str(&input).unwrap();
 
-    let mut document = Document::new().set(
-        "viewBox",
-        (
-            0,
-            0,
-            border + data.len() as i32 * column_space,
-            border + (fontsize + linespacing) * 25 + border,
-        ),
-    );
+    let mut document = Document::new()
+        .set(
+            "viewBox",
+            (
+                0,
+                0,
+                border + data.len() as i32 * column_space,
+                border + (fontsize + linespacing) * 25 + border,
+            ),
+        )
+        .set("width", border + data.len() as i32 * column_space)
+        .set("height", border + (fontsize + linespacing) * 25 + border);
 
     document = document.add(
         Rectangle::new()
