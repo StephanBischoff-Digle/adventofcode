@@ -1,0 +1,97 @@
+<svg viewBox="0 0 130 810" xmlns="http://www.w3.org/2000/svg">
+<rect fill="white" height="100%" width="100%"/>
+<text font-size="20" text-anchor="middle" x="60" y="20">
+2020
+</text>
+<circle cx="50" cy="55" fill="lime" r="7" stroke="black"/>
+<circle cx="70" cy="55" fill="lime" r="7" stroke="black"/>
+<circle cx="50" cy="85" fill="lime" r="7" stroke="black"/>
+<circle cx="70" cy="85" fill="lime" r="7" stroke="black"/>
+<circle cx="50" cy="115" fill="lime" r="7" stroke="black"/>
+<circle cx="70" cy="115" fill="lime" r="7" stroke="black"/>
+<circle cx="50" cy="145" fill="lime" r="7" stroke="black"/>
+<circle cx="70" cy="145" fill="lime" r="7" stroke="black"/>
+<text font-size="10" x="10" y="60">
+01
+</text>
+<text font-size="10" x="10" y="90">
+02
+</text>
+<text font-size="10" x="10" y="120">
+03
+</text>
+<text font-size="10" x="10" y="150">
+04
+</text>
+<text font-size="10" x="10" y="180">
+05
+</text>
+<line stroke="blue" x1="10" x2="100" y1="190" y2="190"/>
+<text font-size="10" x="10" y="210">
+06
+</text>
+<text font-size="10" x="10" y="240">
+07
+</text>
+<line stroke="black" stroke-dasharray="5,5" x1="10" x2="100" y1="250" y2="250"/>
+<text font-size="10" x="10" y="270">
+08
+</text>
+<text font-size="10" x="10" y="300">
+09
+</text>
+<text font-size="10" x="10" y="330">
+10
+</text>
+<line stroke="blue" x1="10" x2="100" y1="340" y2="340"/>
+<text font-size="10" x="10" y="360">
+11
+</text>
+<text font-size="10" x="10" y="390">
+12
+</text>
+<text font-size="10" x="10" y="420">
+13
+</text>
+<text font-size="10" x="10" y="450">
+14
+</text>
+<line stroke="black" stroke-dasharray="5,5" x1="10" x2="100" y1="460" y2="460"/>
+<text font-size="10" x="10" y="480">
+15
+</text>
+<line stroke="blue" x1="10" x2="100" y1="490" y2="490"/>
+<text font-size="10" x="10" y="510">
+16
+</text>
+<text font-size="10" x="10" y="540">
+17
+</text>
+<text font-size="10" x="10" y="570">
+18
+</text>
+<text font-size="10" x="10" y="600">
+19
+</text>
+<text font-size="10" x="10" y="630">
+20
+</text>
+<line stroke="blue" x1="10" x2="100" y1="640" y2="640"/>
+<text font-size="10" x="10" y="660">
+21
+</text>
+<line stroke="black" stroke-dasharray="5,5" x1="10" x2="100" y1="670" y2="670"/>
+<text font-size="10" x="10" y="690">
+22
+</text>
+<text font-size="10" x="10" y="720">
+23
+</text>
+<text font-size="10" x="10" y="750">
+24
+</text>
+<text font-size="10" x="10" y="780">
+25
+</text>
+<line stroke="blue" x1="10" x2="100" y1="790" y2="790"/>
+</svg>

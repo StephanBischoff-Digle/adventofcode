@@ -1,3 +1,5 @@
 */**/target/
 */**/Cargo.lock
 */**/input
+graph/Cargo.lock
+graph/targe/
