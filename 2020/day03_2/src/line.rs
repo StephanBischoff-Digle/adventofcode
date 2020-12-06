@@ -3,13 +3,13 @@ use std::str::FromStr;
 
 #[derive(Debug, PartialEq)]
 pub struct Line {
-    line: Vec<Option<()>>,
+    line: Vec<bool>,
 }
 
 impl Line {
     pub fn check(&self, index: usize) -> bool {
         let mapped_index = index % self.line.len();
-        self.line[mapped_index].is_some()
+        self.line[mapped_index]
     }
 }
 
@@ -20,9 +20,9 @@ impl FromStr for Line {
         let mut line = Vec::new();
         for (idx, c) in s.chars().enumerate() {
             if c == '.' {
-                line.push(None);
+                line.push(false);
             } else if c == '#' {
-                line.push(Some(()));
+                line.push(true);
             } else {
                 return Err(Self::Err::GlyphError(c, idx));
             }
@@ -36,7 +36,7 @@ impl FromStr for Line {
 fn from_str_valid() {
     let input = "#...#.#.";
     let expected = Line {
-        line: vec![Some(()), None, None, None, Some(()), None, Some(()), None],
+        line: vec![true, false, false, false, true, false, true, false],
     };
     let result = Line::from_str(input).unwrap();
 
