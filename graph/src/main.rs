@@ -8,9 +8,24 @@ use svg::node::Text;
 use svg::Document;
 
 #[derive(Debug, Deserialize)]
+enum State {
+    Done,
+    Started,
+}
+
+impl State {
+    pub fn color(&self) -> &'static str {
+        match self {
+            Self::Done => "lime",
+            Self::Started => "white",
+        }
+    }
+}
+
+#[derive(Debug, Deserialize)]
 enum Part {
-    A,
-    B,
+    A(State),
+    B(State),
 }
 
 fn main() {
@@ -66,15 +81,15 @@ fn main() {
         for (d, parts) in days.iter() {
             let d = *d as i32;
             for part in parts.iter() {
-                let offset: i32 = match part {
-                    Part::A => -10,
-                    Part::B => 10,
+                let (offset, color) = match part {
+                    Part::A(state) => (-10, state.color()),
+                    Part::B(state) => (10, state.color()),
                 };
 
                 let c = Circle::new()
                     .set("r", mark_radius)
                     .set("stroke", "black")
-                    .set("fill", "lime")
+                    .set("fill", color)
                     .set("cx", 2 * border + i * column_space + offset)
                     .set("cy", 25 + (linespacing + fontsize) * d);
                 document = document.add(c);

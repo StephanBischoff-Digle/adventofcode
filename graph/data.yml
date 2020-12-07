@@ -1,6 +1,7 @@
 ---
 2020:
-  1: [A, B]
-  2: [A, B]
-  3: [A, B]
-  4: [A, B]
+  1: [A: Done, B: Done]
+  2: [A: Done, B: Done]
+  3: [A: Done, B: Done]
+  4: [A: Done, B: Done]
+  5: [A: Started]

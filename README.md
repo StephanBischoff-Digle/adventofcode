@@ -8,4 +8,5 @@
 
 Legend:
 
+- White: Started
 - Lime: Completed
