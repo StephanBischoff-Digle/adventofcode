@@ -10,3 +10,4 @@ Legend:
 
 - White: Started
 - Lime: Completed
+- Orange: Done but probably improvable
