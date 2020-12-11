@@ -11,6 +11,7 @@ use svg::Document;
 enum State {
     Done,
     Started,
+    Improvable,
 }
 
 impl State {
@@ -18,6 +19,7 @@ impl State {
         match self {
             Self::Done => "lime",
             Self::Started => "white",
+            Self::Improvable => "orange",
         }
     }
 }
