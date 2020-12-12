@@ -79,11 +79,6 @@ fn transform_input(input: &str) -> HashMap<&str, Vec<Bag>> {
     for line in lines.iter() {
         let (k, v) = transform_line(line);
         transformed.insert(k, v);
-        println!(
-            "transformed {} out of {} lines",
-            transformed.len(),
-            lines.len()
-        );
     }
     transformed
 }
@@ -209,17 +204,13 @@ pub fn solve(input: &str, search: &str) -> usize {
     let map = transform_input(input);
 
     let mut cache = HashMap::new();
-    let mut i = 0;
-    while cache.len() < map.len() - 1 && i < map.len() {
-        i += 1;
-        dbg!(cache.len());
-        dbg!(&cache);
+    let mut prev_len = 0;
+    while cache.len() < map.len() - 1 {
         for (k, v) in &map {
-            dbg!(k);
             if *k == search {
                 continue;
             }
-            if dbg!(cache.contains_key(k)) {
+            if cache.contains_key(k) {
                 continue;
             }
             if v.iter()
@@ -231,8 +222,7 @@ pub fn solve(input: &str, search: &str) -> usize {
                             None => false,
                         }
                 })
-                .collect::<Vec<_>>()
-                .len()
+                .count()
                 > 0
             {
                 cache.insert(k, true);
@@ -242,8 +232,11 @@ pub fn solve(input: &str, search: &str) -> usize {
                 cache.insert(k, false);
             }
         }
+        if prev_len == cache.len() {
+            break;
+        }
+        prev_len = cache.len();
     }
-    dbg!(&cache);
     cache
         .iter()
         .fold(0, |acc, (_, &v)| acc + if v { 1 } else { 0 })
