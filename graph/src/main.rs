@@ -12,6 +12,7 @@ enum State {
     Done,
     Started,
     Improvable,
+    Failing,
 }
 
 impl State {
@@ -20,6 +21,7 @@ impl State {
             Self::Done => "lime",
             Self::Started => "white",
             Self::Improvable => "orange",
+            Self::Failing => "red",
         }
     }
 }
