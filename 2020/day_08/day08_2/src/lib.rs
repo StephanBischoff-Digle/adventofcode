@@ -53,11 +53,14 @@ impl FromStr for Program {
 
 impl Program {
     pub fn step(&mut self) -> bool {
-        if self.prog_counter >= self.instructions.len() {
+        if self.prog_counter > self.instructions.len() {
             return false;
         }
 
-        let mut was_jmp = false;
+        if self.prog_counter == self.instructions.len() {
+            return true;
+        }
+
         match self.instructions[self.prog_counter] {
             Operation::Nop(_) => self.prog_counter += 1,
             Operation::Acc(load) => {
@@ -66,20 +69,18 @@ impl Program {
             }
             Operation::Jmp(load) => {
                 self.prog_counter = (self.prog_counter as i32 + load) as usize;
-                was_jmp = true;
             }
-        }
-
-        if self.prog_counter == self.instructions.len() && !was_jmp {
-            return true;
         }
 
         false
     }
 
     pub fn debug_step(&mut self) -> bool {
-        if self.prog_counter >= self.instructions.len() {
+        if self.prog_counter > self.instructions.len() {
             return false;
+        }
+        if self.prog_counter == self.instructions.len() {
+            return true;
         }
 
         println!(
@@ -91,46 +92,42 @@ impl Program {
     }
 
     pub fn find_termination(&mut self) -> Option<i32> {
-        let mut global_seen = HashSet::new();
-        let mut prev_branch_idx = 0;
-        let mut branch_idx = 0;
-        let mut branch_acc = self.acc;
+        let mut seen = HashSet::new();
+        let mut seen_rollback = HashSet::new();
+        let mut acc_rollback = 0;
         let mut iterations = 0;
 
         let mut next_needs_change = false;
 
-        let mut seen = HashSet::new();
+        let mut changed = HashSet::new();
+        let mut last_changed = 0;
         loop {
             seen.insert(self.prog_counter);
 
-            if iterations >= self.instructions.len() || global_seen.len() == self.instructions.len()
-            {
+            if 2 * iterations >= self.instructions.len() || seen.len() == self.instructions.len() {
                 return None;
             }
 
-            if next_needs_change
-                && branch_idx != self.prog_counter
-                && self.prog_counter > prev_branch_idx
-            {
+            if next_needs_change && !changed.contains(&self.prog_counter) {
                 // change instruction
                 match self.instructions[self.prog_counter] {
                     Operation::Jmp(x) => {
                         println!("change {}", self.prog_counter);
                         self.instructions[self.prog_counter] = Operation::Nop(x);
                         next_needs_change = false;
-                        prev_branch_idx = branch_idx;
-                        branch_idx = self.prog_counter;
-                        branch_acc = self.acc;
-                        global_seen = seen.clone();
+                        changed.insert(self.prog_counter);
+                        last_changed = self.prog_counter;
+                        acc_rollback = self.acc;
+                        seen_rollback = seen.clone();
                     }
                     Operation::Nop(x) => {
                         println!("change {}", self.prog_counter);
                         self.instructions[self.prog_counter] = Operation::Jmp(x);
                         next_needs_change = false;
-                        prev_branch_idx = branch_idx;
-                        branch_idx = self.prog_counter;
-                        branch_acc = self.acc;
-                        global_seen = seen.clone();
+                        changed.insert(self.prog_counter);
+                        last_changed = self.prog_counter;
+                        acc_rollback = self.acc;
+                        seen_rollback = seen.clone();
                     }
                     _ => (),
                 }
@@ -143,17 +140,17 @@ impl Program {
 
             if seen.contains(&self.prog_counter) {
                 // rewind
-                println!(" -- {} => REWIND to {} --", self.prog_counter, branch_idx);
-                self.prog_counter = branch_idx;
-                self.acc = branch_acc;
-                seen = global_seen.clone();
+                println!(" -- seen {} => REWIND to {} --", self.prog_counter, 0);
+                self.prog_counter = last_changed;
+                seen = seen_rollback.clone();
+                self.acc = acc_rollback;
 
                 // cleanup
                 if !next_needs_change && iterations > 0 {
-                    println!("repair {}", branch_idx);
-                    match self.instructions[branch_idx] {
-                        Operation::Jmp(x) => self.instructions[branch_idx] = Operation::Nop(x),
-                        Operation::Nop(x) => self.instructions[branch_idx] = Operation::Jmp(x),
+                    println!("repair {}", last_changed);
+                    match self.instructions[last_changed] {
+                        Operation::Jmp(x) => self.instructions[last_changed] = Operation::Nop(x),
+                        Operation::Nop(x) => self.instructions[last_changed] = Operation::Jmp(x),
                         _ => (),
                     }
                 }
