@@ -182,6 +182,5 @@ acc +6";
 
 pub fn solve(input: &str) -> i32 {
     let mut prog = Program::from_str(input).expect("Failed to parse program");
-    prog.find_termination()
-        .expect("Didn't find shit, maybe I need to change the first instruction")
+    prog.find_termination().expect("Didn't find shit ... ")
 }
