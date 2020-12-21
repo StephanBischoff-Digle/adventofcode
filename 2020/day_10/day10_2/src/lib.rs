@@ -1,4 +1,4 @@
-fn matrix_mul(lhs: Vec<Vec<u32>>, rhs: &Vec<Vec<u32>>) -> Vec<Vec<u32>> {
+fn matrix_mul(lhs: Vec<Vec<u64>>, rhs: &Vec<Vec<u64>>) -> Vec<Vec<u64>> {
     let mut result = lhs.clone();
 
     for i in 0..lhs.len() {
@@ -30,7 +30,12 @@ pub fn solve(input: &str) -> u64 {
         .lines()
         .map(|s| s.parse().expect("Failed to parse input"))
         .collect();
+    adapters.push(0);
     adapters.sort();
+    // hack for the windows
+    adapters.push(adapters[adapters.len() - 1]);
+    adapters.push(adapters[adapters.len() - 1]);
+    adapters.push(adapters[adapters.len() - 1]);
 
     // build adjacency matrix
     let mut adj = Vec::with_capacity(adapters.len());
@@ -46,17 +51,20 @@ pub fn solve(input: &str) -> u64 {
         }
         adj.push(row);
     });
-    // TODO: last 3 nodes
-
-    println!("{:#?}", adj);
 
     // multiply
     // TODO: This is super inefficent. `adj` is a strictly upper triangular matrix, there should be way to make this better
     let original = adj.clone();
-    let mut paths = adj[0][adj[0].len() - 1] as u64;
-    for _ in 0..adapters.len() {
+    let mut paths = adj[0][adj[0].len() - 1];
+    for i in 0..adapters.len() {
+        println!(
+            "{:3}% done ({} out of {})",
+            (i * 100) / adapters.len(),
+            i,
+            adapters.len()
+        );
         adj = matrix_mul(adj, &original);
-        paths += adj[0][adj[0].len() - 1] as u64;
+        paths += adj[0][adj[0].len() - 1];
     }
 
     paths
