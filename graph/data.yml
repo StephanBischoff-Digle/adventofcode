@@ -1,4 +1,6 @@
 ---
+# Valid states for the tasks:
+# Started, Improvable, Done
 2020:
   1: [A: Done, B: Done]
   2: [A: Done, B: Done]
