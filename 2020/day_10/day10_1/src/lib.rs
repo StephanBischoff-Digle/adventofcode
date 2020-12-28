@@ -4,7 +4,7 @@ pub fn solve(input: &str) -> u64 {
         .lines()
         .map(|s| s.parse().expect("Failed to parse input"))
         .collect();
-    adapters.sort();
+    adapters.sort_unstable();
 
     let lowest = adapters[0];
     let l_initial = if lowest == 1 { 1 } else { 0 };
