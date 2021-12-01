@@ -26,8 +26,8 @@
 <text font-size="20" text-anchor="middle" x="160" y="20">
 2021
 </text>
-<circle cx="150" cy="55" fill="cyan" r="7" stroke="black"/>
-<circle cx="170" cy="55" fill="cyan" r="7" stroke="black"/>
+<circle cx="150" cy="55" fill="lime" r="7" stroke="black"/>
+<circle cx="170" cy="55" fill="lime" r="7" stroke="black"/>
 <text font-size="10" x="10" y="60">
 01
 </text>
