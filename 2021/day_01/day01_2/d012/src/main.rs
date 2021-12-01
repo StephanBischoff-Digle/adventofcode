@@ -12,13 +12,12 @@ fn main() {
 
     let result = &input
         .windows(4)
-        .filter_map(|ab| {
-            (if let Some(last) = ab.last() {
+        .filter(|ab| {
+            if let Some(last) = ab.last() {
                 ab[0] < *last
             } else {
                 false
-            })
-            .then(|| {})
+            }
         })
         .collect::<Vec<_>>()
         .len();
