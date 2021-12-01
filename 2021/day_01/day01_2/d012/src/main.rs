@@ -12,7 +12,7 @@ fn main() {
 
     let result = &input
         .windows(4)
-        .filter(|ab| {ab[0] < ab[3]})
+        .filter(|ab| ab[0] < ab[3])
         .collect::<Vec<_>>()
         .len();
 
