@@ -37,7 +37,7 @@ impl FromStr for Cmd {
     type Err = CmdParseError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s.split(' ').collect::<Vec<_>>()[..] {
+        match s.split_whitespace().collect::<Vec<_>>()[..] {
             ["forward", b] => Ok(Self::Forward(b.parse::<i32>().expect("Failed to parse Command Value"))),
             ["up", b] => Ok(Self::Up(b.parse::<i32>().expect("Failed to parse Command Value"))),
             ["down", b] => Ok(Self::Down(b.parse::<i32>().expect("Failed to parse Command Value"))),
