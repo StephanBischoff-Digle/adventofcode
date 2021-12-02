@@ -4,9 +4,9 @@ use std::fmt::Display;
 use std::fs;
 
 enum Cmd {
-    Up,
-    Down,
-    Forward,
+    Up(i32),
+    Down(i32),
+    Forward(i32),
 }
 
 #[derive(Debug)]
@@ -27,32 +27,10 @@ impl FromStr for Cmd {
     type Err = CmdParseError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "forward" => Ok(Self::Forward),
-            "up" => Ok(Self::Up),
-            "down" => Ok(Self::Down),
-            _ => Err(CmdParseError)
-        }
-    }
-}
-
-struct CmdVal {
-    word: Cmd,
-    val: u32,
-}
-
-impl FromStr for CmdVal {
-    type Err = CmdParseError;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s.split(' ').collect::<Vec<_>>()[..] {
-            [a, b] => 
-                Ok(
-                    Self {
-                        word: a.parse::<Cmd>().expect("Failed to parse Cmd"),
-                        val: b.parse::<u32>().expect("Failed to parse val"),
-                    }
-                ),
+            ["forward", b] => Ok(Self::Forward(b.parse::<i32>().expect("Failed to parse Command Value"))),
+            ["up", b] => Ok(Self::Up(b.parse::<i32>().expect("Failed to parse Command Value"))),
+            ["down", b] => Ok(Self::Down(b.parse::<i32>().expect("Failed to parse Command Value"))),
             _ => Err(CmdParseError) 
         }
     }
@@ -60,40 +38,40 @@ impl FromStr for CmdVal {
 
 
 struct Pos {
-    horizontal: u32,
-    depth: u32,
+    horizontal: i32,
+    depth: i32,
 }
 
 impl Pos {
     fn new() -> Self {
         Self {
-            horizontal: 0u32,
-            depth: 0u32,
+            horizontal: 0i32,
+            depth: 0i32,
         }
     }
 
-    fn up(&mut self, val: u32) {
+    fn up(&mut self, val: i32) {
         self.depth -= val;
     }
 
-    fn down(&mut self, val: u32) {
+    fn down(&mut self, val: i32) {
         self.depth += val;
     }
 
-    fn forward(&mut self, val: u32) {
+    fn forward(&mut self, val: i32) {
         self.horizontal += val;
     }
 
     fn apply_cmd_str(&mut self, cmd: &str) {
-        let p_cmd = cmd.parse::<CmdVal>().expect("Failed to parse CmdVal");
-        match p_cmd.word {
-            Cmd::Down => self.down(p_cmd.val),
-            Cmd::Up => self.up(p_cmd.val),
-            Cmd::Forward => self.forward(p_cmd.val),
+        let p_cmd = cmd.parse::<Cmd>().expect("Failed to parse CmdVal");
+        match p_cmd {
+            Cmd::Down(val) => self.down(val),
+            Cmd::Up(val) => self.up(val),
+            Cmd::Forward(val) => self.forward(val),
         }
     }
 
-    fn score(&self) -> u32 {
+    fn score(&self) -> i32 {
         self.depth * self.horizontal
     }
 }
