@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import fileinput
+from typing import Callable
 
 
 def read_input() -> list[str]:
@@ -28,7 +29,7 @@ def gamma_eps(lst: list[str]) -> tuple[int, int]:
     return (gamma, epsilon)
 
 
-def filter(mask_gen, lst: list[str]) -> str:
+def filter(mask_gen: Callable[[list[str]], int], lst: list[str]) -> str:
     f_lst = lst
     l = len(lst[0]) - 1
     idx = 0
