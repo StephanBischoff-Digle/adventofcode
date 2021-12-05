@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import fileinput
+import png
 
 
 def read_input() -> list[str]:
@@ -57,6 +58,29 @@ def line_parser(lst: list[str]) -> list[Line]:
     return res
 
 
+def draw(occ: dict[Point]) -> None:
+    img = []
+    max_x = max([p.x for p in occ.keys()])
+    max_y = max([p.y for p in occ.keys()])
+
+    for y in range(max_y):
+        row = ()
+        for x in range(max_x):
+            p = Point(x, y)
+            p_v = occ.get(p, 0)
+            px = (0, 0, 0)
+            if p_v == 1:
+                px = (40, 40, 40)
+            if p_v > 1:
+                px = (255, 255, 255)
+            row = row + px
+        img.append(row)
+
+    with open("map.png", "wb") as f:
+        w = png.Writer(max_x, max_y, greyscale=False)
+        w.write(f, img)
+
+
 def main() -> None:
     in_lst = read_input()
     segments = line_parser(in_lst)
@@ -67,6 +91,8 @@ def main() -> None:
 
     solution = len(list(filter(lambda v: v >= 2, occupied.values())))
     print(solution)
+
+    draw(occupied)
 
 
 if __name__ == "__main__":
