@@ -20,11 +20,11 @@ def main() -> None:
     in_lst = read_input()
     fish = parse(in_lst)
 
-    for _ in range(80):
+    for _ in range(256):
         tmp_0 = fish[0]
         # regular decrement
         for k in range(8):
-            fish[k] = fish[k+1]
+            fish[k] = fish[k + 1]
 
         # 0s added to 6s and add new fish
         fish[6] = fish[6] + tmp_0
