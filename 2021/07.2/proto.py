@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 
 import fileinput
-from collections import Counter
-
-test_input = [16, 1, 2, 0, 4, 2, 7, 1, 2, 14]
 
 
 def read_input() -> list[str]:
