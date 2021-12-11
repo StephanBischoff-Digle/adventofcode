@@ -2,7 +2,6 @@
 
 
 import fileinput
-from typing import Optional
 
 
 def read_input() -> list[str]:
