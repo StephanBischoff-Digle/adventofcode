@@ -12,3 +12,4 @@
 10. [Syntax Scoring](d10.md)
 11. [Dumbo Octopus](d11.md)
 12. [Passage Pathing](d12.md)
+13. [Transparent Origami](d13.md)
