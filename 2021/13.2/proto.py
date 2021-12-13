@@ -70,7 +70,7 @@ def main() -> None:
     # Sadly we don't have the font so we have to interprete the output ourself
     for y in range(y_max + 1):
         for x in range(x_max + 1):
-            print("#" if (x, y) in points else " ", end="")
+            print("█" if (x, y) in points else " ", end="")
         print()
 
 
