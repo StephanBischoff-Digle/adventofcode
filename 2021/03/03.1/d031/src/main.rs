@@ -3,7 +3,7 @@ use std::fs;
 
 fn main() {
     let input = fs::read_to_string("input.txt").expect("Read from input.txt");
-    let input: Vec<&str> = input.trim_end().split("\n").collect();
+    let input: Vec<&str> = input.trim_end().split('\n').collect();
 
     let mut acc: HashMap<usize, u32> = HashMap::new();
 

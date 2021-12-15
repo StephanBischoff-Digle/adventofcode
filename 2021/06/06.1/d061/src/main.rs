@@ -30,7 +30,6 @@ fn main() {
     transform.set(6, 0, 1);
     transform.set(8, 0, 1);
 
-
     let f80 = transform.pow(80) * fishes;
     let solution = (0..9).map(|idx| f80.get(idx, 0)).sum::<i64>();
     println!("{}", solution);

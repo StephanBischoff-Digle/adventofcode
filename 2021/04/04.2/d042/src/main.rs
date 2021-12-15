@@ -4,10 +4,10 @@ mod structs;
 
 fn main() {
     let input = fs::read_to_string("input.txt").expect("Read from input.txt");
-    let input: Vec<&str> = input.trim_end().split("\n").collect();
+    let input: Vec<&str> = input.trim_end().split('\n').collect();
 
     let seq: Vec<i32> = input[0]
-        .split(",")
+        .split(',')
         .map(|s| s.parse().expect("Parse input sequence."))
         .collect();
 
@@ -32,12 +32,10 @@ fn main() {
                 .into_iter()
                 .filter(|board| !board.check_bingo())
                 .collect();
-        } else {
-            if boards[0].check_bingo() {
-                last = n;
-                looser = Some(&boards[0]);
-                break;
-            }
+        } else if boards[0].check_bingo() {
+            last = n;
+            looser = Some(&boards[0]);
+            break;
         }
     }
 

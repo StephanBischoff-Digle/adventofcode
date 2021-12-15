@@ -2,7 +2,7 @@ use std::fs;
 
 mod structs;
 
-fn check_winner(boards: &Vec<structs::Board>) -> Option<usize> {
+fn check_winner(boards: &[structs::Board]) -> Option<usize> {
     for (idx, v) in boards.iter().map(|board| board.check_bingo()).enumerate() {
         if v {
             return Some(idx);
@@ -13,10 +13,10 @@ fn check_winner(boards: &Vec<structs::Board>) -> Option<usize> {
 
 fn main() {
     let input = fs::read_to_string("input.txt").expect("Read from input.txt");
-    let input: Vec<&str> = input.trim_end().split("\n").collect();
+    let input: Vec<&str> = input.trim_end().split('\n').collect();
 
     let seq: Vec<i32> = input[0]
-        .split(",")
+        .split(',')
         .map(|s| s.parse().expect("Parse input sequence."))
         .collect();
 

@@ -1,7 +1,7 @@
-use std::str::FromStr;
 use std::error::Error;
 use std::fmt::Display;
 use std::fs;
+use std::str::FromStr;
 
 enum Cmd {
     Up(i32),
@@ -16,9 +16,7 @@ struct CmdParseError {
 
 impl CmdParseError {
     fn new(msg: String) -> Self {
-        Self {
-            details: msg
-        }
+        Self { details: msg }
     }
 }
 
@@ -38,10 +36,16 @@ impl FromStr for Cmd {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s.split_whitespace().collect::<Vec<_>>()[..] {
-            ["forward", b] => Ok(Self::Forward(b.parse::<i32>().expect("Failed to parse Command Value"))),
-            ["up", b] => Ok(Self::Up(b.parse::<i32>().expect("Failed to parse Command Value"))),
-            ["down", b] => Ok(Self::Down(b.parse::<i32>().expect("Failed to parse Command Value"))),
-            _ => Err(CmdParseError::new(format!("could not parse '{}'", s)))
+            ["forward", b] => Ok(Self::Forward(
+                b.parse::<i32>().expect("Failed to parse Command Value"),
+            )),
+            ["up", b] => Ok(Self::Up(
+                b.parse::<i32>().expect("Failed to parse Command Value"),
+            )),
+            ["down", b] => Ok(Self::Down(
+                b.parse::<i32>().expect("Failed to parse Command Value"),
+            )),
+            _ => Err(CmdParseError::new(format!("could not parse '{}'", s))),
         }
     }
 }
@@ -82,12 +86,8 @@ impl Pos {
 }
 
 fn main() {
-
     let input = fs::read_to_string("input.txt").expect("Failed to read input.txt");
-    let input: Vec<&str> = input
-        .trim_end()
-        .split("\n")
-        .collect();
+    let input: Vec<&str> = input.trim_end().split('\n').collect();
 
     let mut p = Pos::default();
     for line in input.iter() {
@@ -95,5 +95,4 @@ fn main() {
     }
 
     println!("{}", p.score());
-
 }

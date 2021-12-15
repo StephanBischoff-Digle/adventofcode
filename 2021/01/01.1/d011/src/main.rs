@@ -6,15 +6,14 @@ fn main() {
     let input = fs::read_to_string("input.txt").expect("Failed to read input.txt");
     let input: Vec<u32> = input
         .trim_end()
-        .split("\n")
+        .split('\n')
         .map(|l| l.parse::<u32>().expect("Failed to parse"))
         .collect();
 
     let result = &input
         .windows(2)
         .filter_map(|ab| (ab[0] < ab[1]).then(|| {}))
-        .collect::<Vec<_>>()
-        .len();
+        .count();
 
     println!("{}", result);
 }

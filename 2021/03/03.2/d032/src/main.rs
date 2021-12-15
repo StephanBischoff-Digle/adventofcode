@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::fs;
 
-fn gamma_eps(lst: &Vec<&str>) -> (i32, i32) {
+fn gamma_eps(lst: &[&str]) -> (i32, i32) {
     let mut acc: HashMap<usize, u32> = HashMap::new();
 
     // Count bits
@@ -31,11 +31,11 @@ fn gamma_eps(lst: &Vec<&str>) -> (i32, i32) {
     (gamma, epsilon)
 }
 
-fn filter<'a, F>(mask_gen: F, lst: &'a Vec<&'a str>) -> &'a str
+fn filter<'a, F>(mask_gen: F, lst: &[&'a str]) -> &'a str
 where
     F: FnOnce(&Vec<&str>) -> i32 + Copy,
 {
-    let mut f_lst = lst.clone();
+    let mut f_lst = lst.to_owned();
     let mut l: i32 = (lst[0].len() - 1).try_into().expect("Parse usize unto i32");
     let mut idx = 0;
     while f_lst.len() > 1 {
@@ -53,7 +53,7 @@ where
                     == d
             })
             .cloned()
-            .collect::<Vec<_>>();
+            .collect();
         idx += 1;
         l -= 1;
     }
@@ -61,7 +61,7 @@ where
     f_lst[0]
 }
 
-fn filter_lst<'a>(lst: &'a Vec<&'a str>) -> (&'a str, &'a str) {
+fn filter_lst<'a>(lst: &[&'a str]) -> (&'a str, &'a str) {
     (
         filter(|x| gamma_eps(x).0, lst),
         filter(|x| gamma_eps(x).1, lst),
@@ -70,7 +70,7 @@ fn filter_lst<'a>(lst: &'a Vec<&'a str>) -> (&'a str, &'a str) {
 
 fn main() {
     let input = fs::read_to_string("input.txt").expect("Read from input.txt");
-    let input: Vec<&str> = input.trim_end().split("\n").collect();
+    let input: Vec<&str> = input.trim_end().split('\n').collect();
 
     let (g, e) = filter_lst(&input);
     let gamma = u32::from_str_radix(g, 2).expect("Parse binary into u32.");

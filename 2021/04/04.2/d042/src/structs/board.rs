@@ -30,7 +30,7 @@ impl Board {
                 return true;
             }
         }
-        return false;
+        false
     }
 
     /// Checks if the Board is in bingo.

@@ -70,7 +70,7 @@ where
             }
         }
 
-        return o;
+        o
     }
 }
 

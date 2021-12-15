@@ -85,7 +85,7 @@ impl Pos {
 
 fn main() {
     let input = fs::read_to_string("input.txt").expect("Failed to read input.txt");
-    let input: Vec<&str> = input.trim_end().split("\n").collect();
+    let input: Vec<&str> = input.trim_end().split('\n').collect();
 
     let mut p = Pos::default();
     for line in input.iter() {

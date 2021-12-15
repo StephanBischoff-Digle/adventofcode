@@ -42,22 +42,22 @@ impl Line {
 
         let x_step = delta_x / delta_x.abs();
         let y_step = delta_y / delta_y.abs();
-        return (0..=delta_x.abs())
+        (0..=delta_x.abs())
             .map(|i| Point::new(self.a.x + i * x_step, self.a.y + i * y_step))
-            .collect();
+            .collect()
     }
 }
 
-fn line_parser(lst: &Vec<&str>) -> Vec<Line> {
+fn line_parser(lst: &[&str]) -> Vec<Line> {
     let mut res = Vec::new();
     for line in lst {
         let points = line.split(" -> ").collect::<Vec<_>>();
         let p_a: Vec<i32> = points[0]
-            .split(",")
+            .split(',')
             .map(|c| c.parse().expect("Parse i32."))
             .collect();
         let p_b: Vec<i32> = points[1]
-            .split(",")
+            .split(',')
             .map(|c| c.parse().expect("Parse i32."))
             .collect();
         let a = Point::new(p_a[0], p_a[1]);
@@ -69,7 +69,7 @@ fn line_parser(lst: &Vec<&str>) -> Vec<Line> {
 
 fn main() {
     let input = fs::read_to_string("input.txt").expect("Read from input.txt");
-    let input: Vec<&str> = input.trim_end().split("\n").collect();
+    let input: Vec<&str> = input.trim_end().split('\n').collect();
 
     let segments = line_parser(&input);
 
