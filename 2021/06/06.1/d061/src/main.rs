@@ -3,19 +3,19 @@ use std::fs;
 mod matrix;
 use matrix::Matrix;
 
-fn line_parser(lst: &Vec<&str>) -> Matrix<i64, 9, 1> {
+fn line_parser(lst: &[&str]) -> Matrix<i64, 9, 1> {
     let mut fishes = Matrix::default();
     lst[0]
-        .split(",")
+        .split(',')
         .map(|s| s.parse().expect("Parse input."))
         .for_each(|v| fishes.set(v, 0, fishes.get(v, 0) + 1));
 
-    return fishes;
+    fishes
 }
 
 fn main() {
     let input = fs::read_to_string("input.txt").expect("Read from input.txt");
-    let input: Vec<&str> = input.trim_end().split("\n").collect();
+    let input: Vec<&str> = input.trim_end().split('\n').collect();
     let fishes = line_parser(&input);
 
     let mut transform: Matrix<_, 9, 9> = Matrix::default();
