@@ -14,5 +14,6 @@
 12. [Passage Pathing](12/Readme.md)
 13. [Transparent Origami](13/Readme.md)
 14. [Extended Polymerization](14/Readme.md)
+15. [Chiton](15/Readme.md)
 
 
