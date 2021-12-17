@@ -54,6 +54,8 @@
 <circle cx="170" cy="415" fill="cyan" r="7" stroke="black"/>
 <circle cx="150" cy="445" fill="cyan" r="7" stroke="black"/>
 <circle cx="170" cy="445" fill="cyan" r="7" stroke="black"/>
+<circle cx="150" cy="475" fill="cyan" r="7" stroke="black"/>
+<circle cx="170" cy="475" fill="cyan" r="7" stroke="black"/>
 <text font-size="10" x="10" y="60">
 01
 </text>
