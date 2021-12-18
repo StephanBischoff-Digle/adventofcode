@@ -24,7 +24,7 @@ def parse_input(in_str: str) -> tuple[tuple[int, int], tuple[int, int]]:
 
 def main() -> None:
     in_lst = read_input()
-    area = parse_input(in_lst[1])
+    area = parse_input(in_lst[0])
     log.debug(f"Area: {area}")
     pos = min(area[1])
 
