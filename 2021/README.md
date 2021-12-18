@@ -16,5 +16,6 @@
 14. [Extended Polymerization](14/Readme.md)
 15. [Chiton](15/Readme.md)
 16. [Packet Decoder](16/Readme.md)
+17. [Trick Shot](17/Readme.md)
 
 
