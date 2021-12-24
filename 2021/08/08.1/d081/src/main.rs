@@ -3,13 +3,11 @@ use std::fs;
 fn main() {
     let input = fs::read_to_string("input.txt").expect("Read input.txt");
 
-    let lst: Vec<&str> = input
+    let lst = input
         .lines()
-        .map(|line| line.split(" | ").collect::<Vec<_>>()[1])
-        .collect();
+        .map(|line| line.split(" | ").collect::<Vec<_>>()[1]);
 
     let solution: i32 = lst
-        .into_iter()
         .map(|line| {
             {
                 line.split(' ')
