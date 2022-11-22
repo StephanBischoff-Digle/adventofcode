@@ -5,9 +5,3 @@
 ## Progress
 
 ![overview graphic](./graph/image.svg)
-
-Legend:
-
-- White: Started
-- Lime: Completed
-- Orange: Done but probably improvable
