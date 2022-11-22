@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 use std::fs;
 use svg::node::element::Circle;
@@ -7,7 +7,7 @@ use svg::node::element::Rectangle;
 use svg::node::Text;
 use svg::Document;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize, Copy, Clone)]
 enum State {
     Done,
     Started,
@@ -16,15 +16,36 @@ enum State {
     Prototype,
 }
 
+struct ColoredState {
+    state: State,
+    color: &'static str,
+}
+
 impl State {
     pub fn color(&self) -> &'static str {
         match self {
-            Self::Done => "lime",
-            Self::Started => "white",
-            Self::Improvable => "orange",
-            Self::Failing => "red",
-            Self::Prototype => "cyan",
+            Self::Done => "#3e6d9c",
+            Self::Started => "#001253",
+            Self::Improvable => "#fd841f",
+            Self::Failing => "#e14d2a",
+            Self::Prototype => "#3e9c6d",
         }
+    }
+
+    pub fn colored_iterator() -> impl Iterator<Item = ColoredState> {
+        [
+            State::Done,
+            State::Started,
+            State::Prototype,
+            State::Improvable,
+            State::Failing,
+        ]
+        .iter()
+        .copied()
+        .map(|state| ColoredState {
+            state,
+            color: state.color(),
+        })
     }
 }
 
@@ -56,7 +77,10 @@ fn main() {
                 0,
                 0,
                 border + data.len() as i32 * column_space,
-                border + (fontsize + linespacing) * 25 + border,
+                border
+                    + (fontsize + linespacing) * 26
+                    + border
+                    + State::colored_iterator().count() as i32 * (fontsize + linespacing),
             ),
         )
         .set("width", border + data.len() as i32 * column_space)
@@ -67,7 +91,7 @@ fn main() {
         Rectangle::new()
             .set("width", "100%")
             .set("height", "100%")
-            .set("fill", "white"),
+            .set("fill", "#1b1a17"),
     );
 
     ////////////////////////////////////////////////////////////////////////
@@ -79,6 +103,7 @@ fn main() {
             .add(Text::new(format!("{}", year)))
             .set("x", 2 * border + i * column_space)
             .set("y", 20)
+            .set("fill", "#F1EFDC")
             .set("text-anchor", "middle")
             .set("font-size", 2 * fontsize);
         document = document.add(year_txt);
@@ -94,7 +119,6 @@ fn main() {
 
                 let c = Circle::new()
                     .set("r", mark_radius)
-                    .set("stroke", "black")
                     .set("fill", color)
                     .set("cx", 2 * border + i * column_space + offset)
                     .set("cy", 25 + (linespacing + fontsize) * d);
@@ -109,14 +133,15 @@ fn main() {
         let t = svg::node::element::Text::new()
             .add(Text::new(format!("{:02}", d)))
             .set("font-size", fontsize)
+            .set("fill", "#F1EFDC")
             .set("x", 10)
             .set("y", (border + (linespacing + fontsize) * d) as usize);
         document = document.add(t);
 
-        // black dashed line for each week
+        // dashed line for each week
         if d % 7 == 0 {
             let line = Line::new()
-                .set("stroke", "black")
+                .set("stroke", "#576F72")
                 .set(
                     "stroke-dasharray",
                     format!("{},{}", fontsize / 2, fontsize / 2),
@@ -134,10 +159,10 @@ fn main() {
             document = document.add(line);
         }
 
-        // blue line every 5 days
+        // line every 5 days
         if d % 5 == 0 {
             let line = Line::new()
-                .set("stroke", "blue")
+                .set("stroke", "#7D9D9C")
                 .set("x1", 10)
                 .set("x2", data.len() * column_space as usize)
                 .set(
@@ -150,6 +175,40 @@ fn main() {
                 );
             document = document.add(line);
         }
+    }
+
+    let legend_start = border + (linespacing + fontsize) * 27;
+
+    let legend_txt = svg::node::element::Text::new()
+        .add(Text::new("Legend"))
+        .set("x", border - mark_radius)
+        .set("y", legend_start - 2 * fontsize)
+        .set("fill", "#F1EFDC")
+        .set("text-anchor", "left")
+        .set("font-size", 2 * fontsize);
+    document = document.add(legend_txt);
+
+    for (idx, e) in State::colored_iterator().enumerate() {
+        let c = Circle::new()
+            .set("r", mark_radius)
+            .set("fill", e.color)
+            .set("cx", border)
+            .set("cy", legend_start + (idx as i32) * (fontsize + linespacing));
+        document = document.add(c);
+
+        let t = svg::node::element::Text::new()
+            .add(Text::new(format!(
+                "{}",
+                serde_yaml::to_string::<State>(&e.state)
+                    .unwrap()
+                    .strip_prefix("---")
+                    .unwrap()
+            )))
+            .set("font-size", fontsize)
+            .set("fill", "#F1EFDC")
+            .set("x", border + fontsize + linespacing)
+            .set("y", legend_start + (idx as i32) * (fontsize + linespacing));
+        document = document.add(t);
     }
 
     svg::save("image.svg", &document).unwrap();

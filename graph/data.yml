@@ -1,6 +1,6 @@
 ---
 # Valid states for the tasks:
-# Started, Improvable, Done
+# Started, Improvable, Done, Prototype
 2020:
   1: [A: Done, B: Done]
   2: [A: Done, B: Done]
@@ -31,3 +31,5 @@
   16: [A: Prototype, B: Prototype]
   17: [A: Prototype, B: Prototype]
   18: [A: Prototype, B: Prototype]
+  18: [A: Failing]
+2022: {}
