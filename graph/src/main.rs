@@ -2,8 +2,10 @@ use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 use std::fs;
 use svg::node::element::Circle;
+use svg::node::element::Definitions;
 use svg::node::element::Line;
 use svg::node::element::Rectangle;
+use svg::node::element::Style;
 use svg::node::Text;
 use svg::Document;
 
@@ -63,6 +65,12 @@ fn main() {
     let fontsize: i32 = 10;
     let mark_radius: i32 = (fontsize as f32 * 0.66).round() as i32;
     let column_space: i32 = 100;
+    let font_import = "@font-face {
+    font-family: 'Recursive';
+    src: url('https://fonts.googleapis.com/css2?family=Recursive:wght,CASL@500,1&amp;display=swap');
+  }";
+    let font = "font-family: 'Recursive', sans-serif;";
+    let defs = Definitions::new().add(Style::new(font_import));
 
     // Read data file
     let input = fs::read_to_string("data.yml").expect("Failed to read input file");
@@ -71,6 +79,7 @@ fn main() {
     ////////////////////////////////////////////////////////////////////////
     // Setup SVG root element
     let mut document = Document::new()
+        .add(defs)
         .set(
             "viewBox",
             (
@@ -83,6 +92,7 @@ fn main() {
                     + State::colored_iterator().count() as i32 * (fontsize + linespacing),
             ),
         )
+        .set("style", font)
         .set("width", border + data.len() as i32 * column_space)
         .set("height", border + (fontsize + linespacing) * 25 + border);
 

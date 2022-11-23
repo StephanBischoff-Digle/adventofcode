@@ -1,4 +1,12 @@
-<svg height="810" viewBox="0 0 330 990" width="330" xmlns="http://www.w3.org/2000/svg">
+<svg height="810" style="font-family: 'Recursive', sans-serif;" viewBox="0 0 330 990" width="330" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<style>
+@font-face {
+    font-family: 'Recursive';
+    src: url('https://fonts.googleapis.com/css2?family=Recursive:wght,CASL@500,1&amp;display=swap');
+  }
+</style>
+</defs>
 <rect fill="#1b1a17" height="100%" width="100%"/>
 <text fill="#F1EFDC" font-size="20" text-anchor="middle" x="60" y="20">
 2020
