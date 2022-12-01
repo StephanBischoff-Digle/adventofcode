@@ -73,7 +73,7 @@
 2022
 </text>
 <circle cx="250" cy="55" fill="#3e6d9c" r="7"/>
-<circle cx="270" cy="55" fill="#001253" r="7"/>
+<circle cx="270" cy="55" fill="#3e6d9c" r="7"/>
 <text fill="#F1EFDC" font-size="10" x="10" y="60">
 01
 </text>
