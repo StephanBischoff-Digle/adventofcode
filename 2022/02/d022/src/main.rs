@@ -25,20 +25,20 @@ impl RPS {
 
     fn find_shape(&self, outcome: &Outcome) -> Self {
         match outcome {
-            Outcome::Win => self.win(),
-            Outcome::Lose => self.loose(),
+            Outcome::Win => self.superior(),
+            Outcome::Lose => self.inferior(),
             Outcome::Draw => self.clone(),
         }
     }
 
-    fn win(&self) -> Self {
+    fn superior(&self) -> Self {
         match self {
             Self::Rock => Self::Paper,
             Self::Paper => Self::Scissors,
             Self::Scissors => Self::Rock,
         }
     }
-    fn loose(&self) -> Self {
+    fn inferior(&self) -> Self {
         match self {
             Self::Rock => Self::Scissors,
             Self::Paper => Self::Rock,
