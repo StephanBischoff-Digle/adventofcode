@@ -1,4 +1,11 @@
-use std::{fs, str::FromStr};
+use std::fs;
+
+use nom::{
+    bytes::complete::tag,
+    character::complete::{newline, u32 as parse_u32},
+    multi::separated_list1,
+    IResult,
+};
 
 enum Containment {
     Disjunct,
@@ -27,39 +34,42 @@ impl Range {
     }
 }
 
-impl FromStr for Range {
-    type Err = ();
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        // This might panic
-        let split: Vec<u32> = s
-            .split('-')
-            .map(|c| c.parse().expect(&format!("Parsing {}", c)))
-            .collect();
-        if split.len() == 2 {
-            return Ok(Self {
-                start: u32::min(split[0], split[1]),
-                end: u32::max(split[0], split[1]),
-            });
-        }
-        Err(())
-    }
+fn parse_range(input: &str) -> IResult<&str, Range> {
+    let (input, start) = parse_u32(input)?;
+    let (input, _) = tag("-")(input)?;
+    let (input, end) = parse_u32(input)?;
+    Ok((input, Range { start, end }))
 }
 
-fn main() {
-    let input = fs::read_to_string("input.txt").expect("Reading input file");
-    let count = input
-        .lines()
-        .map(|line| {
-            line.split(',')
-                .map(|sr| Range::from_str(sr).expect(&format!("Parsing Range from {}", sr)))
-                .collect::<Vec<_>>()
-        })
-        .filter_map(|range_vec| match range_vec[0].containment(&range_vec[1]) {
+fn parse_line(input: &str) -> IResult<&str, (Range, Range)> {
+    let (input, a) = parse_range(input)?;
+    let (input, _) = tag(",")(input)?;
+    let (input, b) = parse_range(input)?;
+    Ok((input, (a, b)))
+}
+
+fn parse_input(input: &str) -> IResult<&str, Vec<(Range, Range)>> {
+    let (input, ranges) = separated_list1(newline, parse_line)(input)?;
+    Ok((input, ranges))
+}
+
+fn compute(input: &[(Range, Range)]) -> usize {
+    input
+        .iter()
+        .filter_map(|(a, b)| match a.containment(b) {
             Containment::Enclosed => Some(()),
             Containment::Intersecting => Some(()),
             Containment::Disjunct => None,
         })
-        .count();
-    println!("{}", count);
+        .count()
+}
+
+fn main() {
+    match &fs::read_to_string("input.txt") {
+        Ok(data) => match parse_input(data) {
+            Ok((_, input)) => println!("{}", compute(&input)),
+            Err(err) => eprintln!("Error parsing: {}", err),
+        },
+        Err(err) => eprintln!("Failed to read input file: {}", err),
+    }
 }
