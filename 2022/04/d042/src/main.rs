@@ -4,6 +4,7 @@ use nom::{
     bytes::complete::tag,
     character::complete::{newline, u32 as parse_u32},
     multi::separated_list1,
+    sequence::separated_pair,
     IResult,
 };
 
@@ -35,16 +36,12 @@ impl Range {
 }
 
 fn parse_range(input: &str) -> IResult<&str, Range> {
-    let (input, start) = parse_u32(input)?;
-    let (input, _) = tag("-")(input)?;
-    let (input, end) = parse_u32(input)?;
+    let (input, (start, end)) = separated_pair(parse_u32, tag("-"), parse_u32)(input)?;
     Ok((input, Range { start, end }))
 }
 
 fn parse_line(input: &str) -> IResult<&str, (Range, Range)> {
-    let (input, a) = parse_range(input)?;
-    let (input, _) = tag(",")(input)?;
-    let (input, b) = parse_range(input)?;
+    let (input, (a, b)) = separated_pair(parse_range, tag(","), parse_range)(input)?;
     Ok((input, (a, b)))
 }
 
