@@ -9,7 +9,7 @@ use tracing::info;
 use crate::command::Command;
 use crate::crates::{try_parse_crate, Crate, CrateSpot};
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Stacks {
     stacks: Vec<VecDeque<Crate>>,
 }
@@ -73,13 +73,13 @@ impl Display for Stacks {
                     }
                 )?;
             }
-            writeln!(f, "")?;
+            writeln!(f)?;
         }
         self.stacks
             .iter()
             .enumerate()
             .for_each(|(i, _)| write!(f, " {}  ", i + 1).unwrap());
-        writeln!(f, "")?;
+        writeln!(f)?;
         Ok(())
     }
 }

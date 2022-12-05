@@ -4,13 +4,13 @@ use nom::{
     branch::alt, bytes::complete::tag, character::complete::anychar, sequence::delimited, IResult,
 };
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug)]
 pub enum CrateSpot {
     Empty,
     Occupied(Crate),
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Crate {
     pub designation: char,
 }
