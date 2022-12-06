@@ -4,7 +4,7 @@ use nom::{
     branch::alt, bytes::complete::tag, character::complete::anychar, sequence::delimited, IResult,
 };
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum CrateSpot {
     Empty,
     Occupied(Crate),

@@ -9,7 +9,7 @@ use tracing::info;
 use crate::command::Command;
 use crate::crates::{try_parse_crate, Crate, CrateSpot};
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Stacks {
     stacks: Vec<VecDeque<Crate>>,
 }
@@ -65,13 +65,13 @@ impl Display for Stacks {
                     }
                 )?;
             }
-            writeln!(f, "")?;
+            writeln!(f)?;
         }
         self.stacks
             .iter()
             .enumerate()
             .for_each(|(i, _)| write!(f, " {}  ", i + 1).unwrap());
-        writeln!(f, "")?;
+        writeln!(f)?;
         Ok(())
     }
 }
@@ -148,8 +148,8 @@ mod test {
 [Z] [M] [P]
  1   2   3";
         let (_, stacks) = parse_stacks(input).unwrap();
-        let a = VecDeque::from_iter(vec![Crate::new('N'), Crate::new('Z')]);
-        let b = VecDeque::from_iter(vec![Crate::new('D'), Crate::new('C'), Crate::new('M')]);
+        let a = VecDeque::from_iter(vec![Crate::new('Z'), Crate::new('N')]);
+        let b = VecDeque::from_iter(vec![Crate::new('M'), Crate::new('C'), Crate::new('D')]);
         let c = VecDeque::from_iter(vec![Crate::new('P')]);
         let expected = Stacks {
             stacks: vec![a, b, c],
