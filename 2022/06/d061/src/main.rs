@@ -1,8 +1,7 @@
-use std::{collections::HashSet, fs};
+use std::{collections::BTreeSet, fs};
 
 fn all_different(lst: &[char]) -> bool {
-    let set: HashSet<&char> = HashSet::from_iter(lst);
-    set.len() == lst.len()
+    BTreeSet::<&char>::from_iter(lst).len() == lst.len()
 }
 
 fn main() {
