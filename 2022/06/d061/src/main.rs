@@ -1,9 +1,8 @@
-use std::fs;
+use std::{collections::HashSet, fs};
 
 fn all_different(lst: &[char]) -> bool {
-    let mut work = Vec::from(lst);
-    work.sort();
-    work.windows(2).all(|ab| ab[0] != ab[1])
+    let set: HashSet<&char> = HashSet::from_iter(lst);
+    set.len() == lst.len()
 }
 
 fn main() {
