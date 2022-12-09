@@ -27,7 +27,7 @@ impl State {
     pub fn color(&self) -> &'static str {
         match self {
             Self::Done => "#3e6d9c",
-            Self::Started => "#001253",
+            Self::Started => "#9c3e6d",
             Self::Improvable => "#fd841f",
             Self::Failing => "#e14d2a",
             Self::Prototype => "#3e9c6d",

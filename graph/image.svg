@@ -84,6 +84,7 @@
 <circle cx="270" cy="175" fill="#3e6d9c" r="7"/>
 <circle cx="250" cy="205" fill="#3e6d9c" r="7"/>
 <circle cx="270" cy="205" fill="#3e6d9c" r="7"/>
+<circle cx="250" cy="235" fill="#9c3e6d" r="7"/>
 <circle cx="250" cy="295" fill="#3e6d9c" r="7"/>
 <circle cx="270" cy="295" fill="#3e6d9c" r="7"/>
 <text fill="#F1EFDC" font-size="10" x="10" y="60">
@@ -178,7 +179,7 @@ Legend
 Done
 
 </text>
-<circle cx="30" cy="870" fill="#001253" r="7"/>
+<circle cx="30" cy="870" fill="#9c3e6d" r="7"/>
 <text fill="#F1EFDC" font-size="10" x="60" y="870">
 
 Started
