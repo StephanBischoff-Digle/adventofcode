@@ -85,6 +85,8 @@
 <circle cx="250" cy="205" fill="#3e6d9c" r="7"/>
 <circle cx="270" cy="205" fill="#3e6d9c" r="7"/>
 <circle cx="250" cy="235" fill="#9c3e6d" r="7"/>
+<circle cx="250" cy="265" fill="#3e9c6d" r="7"/>
+<circle cx="270" cy="265" fill="#3e9c6d" r="7"/>
 <circle cx="250" cy="295" fill="#3e6d9c" r="7"/>
 <circle cx="270" cy="295" fill="#3e6d9c" r="7"/>
 <circle cx="250" cy="325" fill="#fd841f" r="7"/>
