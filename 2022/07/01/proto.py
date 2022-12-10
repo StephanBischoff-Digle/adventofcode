@@ -27,6 +27,8 @@ class INode(object):
 
 
 def terminal(fs: FileSystem) -> None:
+    print("-------------------------------------------------------------------")
+    print("============================== START ==============================")
     cmd = "ls"
     pos = 0
     path = "/"
@@ -86,6 +88,41 @@ def terminal(fs: FileSystem) -> None:
                 cpos = tpos
             continue
 
+        if cmd == "tree":
+            def print_tree(p: int, depth: int, last: list[bool]):
+                kv = list(fs[p].content.items())
+                last_idx = len(kv)-1
+                kv.sort(key=lambda x: x[0])
+                dirs = list(filter(lambda x: fs[x[1]].is_dir(), kv))
+                files = list(filter(lambda x: not fs[x[1]].is_dir(), kv))
+
+                prefix = ""
+                for l in last:
+                    if l:
+                        prefix += "  "
+                    else:
+                        prefix += "│ "
+
+                for idx, (key, val) in enumerate(files):
+                    pre = "└" if idx == last_idx-2 else "├"
+                    s = "{} {}".format(prefix + pre, key)
+                    sl = len(s)
+                    f_string = "{}".format(s) + "{:" + str(50-sl) + "}"
+                    print(f_string.format(fs[val].size))
+
+                for idx, (key, val) in enumerate(dirs):
+                    pre = "└" if idx+len(files) == last_idx else "├"
+                    if key in [".", ".."]:
+                        continue
+                    print(
+                        "{} \033[32;1m{}\033[0m".format(prefix + pre, key))
+                    print_tree(val, depth+1, last +
+                               [idx+len(files) == last_idx])
+            depth = 0
+            print("\033[32;1m.\033[0m")
+            print_tree(pos, depth, [])
+            continue
+
         if cmd == "pwd":
             if pos == 0:
                 print("/")
@@ -111,9 +148,13 @@ def terminal(fs: FileSystem) -> None:
         print(
             "\033[34mpwd\033[0m              -- prints the path to the current directory")
         print(
+            "\033[34mtree\033[0m             -- prints the structure of the current directory")
+        print(
             "\033[34mq\033[0m, \033[34mquit\033[0m, \033[34mexit\033[0m    -- terminates the shell")
         print(
             "\033[34mh\033[0m, \033[34mhelp\033[0m          -- print this help message")
+
+    print("==============================  END  ==============================")
 
 
 def solve(fs: FileSystem) -> int:
