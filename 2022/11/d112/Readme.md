@@ -9,4 +9,4 @@ $$
 v \mod t_i \quad\equiv\quad v \bmod \prod_{k=0}^nt_k \mod t_i
 $$
 
-$v$'s upper bound is then $\prod_{k=0}^nt_k - 1$
+$v$'s upper bound is then $\Pi_{k=0}^nt_k$
