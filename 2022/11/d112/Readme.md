@@ -1,4 +1,4 @@
-# Keeping the numbers large
+# Keeping the numbers small
 
 Key insight: the input test values for each monkey are co-prime to each other (they are all primes).
 This allows us to multiply them togheter and use the product as a modular space.
