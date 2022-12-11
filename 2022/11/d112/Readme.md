@@ -1,4 +1,4 @@
-# Keeping the numbers large
+# Keeping the numbers small
 
 Key insight: the input test values for each monkey are co-prime to each other (they are all primes).
 This allows us to multiply them togheter and use the product as a modular space.
@@ -9,4 +9,4 @@ $$
 v \mod t_i \quad\equiv\quad v \bmod \prod_{k=0}^nt_k \mod t_i
 $$
 
-$v$'s upper bound is then $\prod_{k=0}^nt_k - 1$
+$v$'s upper bound is then $\Pi_{k=0}^nt_k$
