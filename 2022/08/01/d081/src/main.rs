@@ -32,8 +32,7 @@ fn print_vis(vis: &[Vec<bool>]) {
 fn solve(field: &Field) -> usize {
     let len = field.len();
 
-    let mut visible = Vec::with_capacity(len);
-    field.iter().for_each(|_| visible.push(vec![false; len]));
+    let mut visible = vec![vec![false; len]; len];
     let mut kernel = [vec![-1; len], vec![-1; len], vec![-1; len], vec![-1; len]];
 
     for i in 0..len {
