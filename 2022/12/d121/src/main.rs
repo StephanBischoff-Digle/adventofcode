@@ -12,6 +12,27 @@ impl Point {
     fn new(x: usize, y: usize) -> Self {
         Self { x, y }
     }
+
+    fn neighbors(&self, bottom_right: &Point) -> Vec<Self> {
+        let mut neighbors = Vec::new();
+        if self.x > 0 {
+            neighbors.push(Self::new(self.x - 1, self.y));
+        }
+
+        if self.x < bottom_right.x {
+            neighbors.push(Self::new(self.x + 1, self.y));
+        }
+
+        if self.y > 0 {
+            neighbors.push(Self::new(self.x, self.y - 1));
+        }
+
+        if self.y < bottom_right.y {
+            neighbors.push(Self::new(self.x, self.y + 1));
+        }
+
+        neighbors
+    }
 }
 
 #[derive(Copy, Clone, Eq, PartialEq)]
@@ -40,10 +61,13 @@ impl Ord for Node {
 }
 
 fn find_path(field: Field, start: Point, end: Point) -> usize {
+    let max_y = field.len();
+    let max_x = field[0].len();
+    let bottom_right = Point::new(max_x - 1, max_y - 1);
     let mut node_field = Vec::new();
-    for y in 0..field.len() {
+    for (y, line) in field.iter().enumerate() {
         let mut row = Vec::new();
-        for x in 0..field[y].len() {
+        for (x, _) in line.iter().enumerate() {
             row.push(Node::new(Point::new(x, y), 0, None));
         }
         node_field.push(row);
@@ -57,59 +81,22 @@ fn find_path(field: Field, start: Point, end: Point) -> usize {
             return node.cost;
         }
 
-        let cx = node.pos.x;
-        let cy = node.pos.y;
-        let ccost = node.cost;
-        let h = field[cy][cx];
+        let h = field[node.pos.y][node.pos.x];
 
         // check neighbors
-        if cx > 0 {
-            let mut l_node = node_field[cy][cx - 1];
-            let l_h = field[l_node.pos.y][l_node.pos.x];
-            if l_h <= h + 1 && (l_node.cost > ccost + 1 || l_node.parent.is_none()) {
-                l_node.cost = ccost + 1;
-                l_node.parent = Some(Point::new(cx, cy));
-                node_field[cy][cx - 1].cost = ccost + 1;
-                node_field[cy][cx - 1].parent = Some(Point::new(cx, cy));
-                heap.push(l_node);
-            }
-        }
-        if cy > 0 {
-            let mut l_node = node_field[cy - 1][cx];
-            let l_h = field[l_node.pos.y][l_node.pos.x];
-            if l_h <= h + 1 && (l_node.cost > ccost + 1 || l_node.parent.is_none()) {
-                l_node.cost = ccost + 1;
-                l_node.parent = Some(Point::new(cx, cy));
-                node_field[cy - 1][cx].cost = ccost + 1;
-                node_field[cy - 1][cx].parent = Some(Point::new(cx, cy));
-                heap.push(l_node);
-            }
-        }
-        if cx < node_field[0].len() - 1 {
-            let mut l_node = node_field[cy][cx + 1];
-            let l_h = field[l_node.pos.y][l_node.pos.x];
-            if l_h <= h + 1 && (l_node.cost > ccost + 1 || l_node.parent.is_none()) {
-                l_node.cost = ccost + 1;
-                l_node.parent = Some(Point::new(cx, cy));
-                node_field[cy][cx + 1].cost = ccost + 1;
-                node_field[cy][cx + 1].parent = Some(Point::new(cx, cy));
-                heap.push(l_node);
-            }
-        }
-        if cy < node_field.len() - 1 {
-            let mut l_node = node_field[cy + 1][cx];
-            let l_h = field[l_node.pos.y][l_node.pos.x];
-            if l_h <= h + 1 && (l_node.cost > ccost + 1 || l_node.parent.is_none()) {
-                l_node.cost = ccost + 1;
-                l_node.parent = Some(Point::new(cx, cy));
-                node_field[cy + 1][cx].cost = ccost + 1;
-                node_field[cy + 1][cx].parent = Some(Point::new(cx, cy));
-                heap.push(l_node);
+        for neighbor in node.pos.neighbors(&bottom_right) {
+            let n_node = node_field[neighbor.y][neighbor.x];
+            let n_height = field[neighbor.y][neighbor.x];
+
+            if n_height <= h + 1 && (n_node.cost > node.cost + 1 || n_node.parent.is_none()) {
+                node_field[neighbor.y][neighbor.x].cost = node.cost + 1;
+                node_field[neighbor.y][neighbor.x].parent = Some(node.pos);
+                heap.push(node_field[neighbor.y][neighbor.x]);
             }
         }
     }
 
-    0
+    usize::MAX
 }
 
 fn parse_field(input: &str) -> Option<(Field, (Point, Point))> {
