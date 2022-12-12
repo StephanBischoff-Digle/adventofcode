@@ -60,6 +60,29 @@ impl Ord for Node {
     }
 }
 
+fn construct_path<'a>(
+    node_field: &'a [Vec<Node>],
+    start: &'a Point,
+    end: &'a Point,
+) -> Vec<&'a Point> {
+    let mut path = Vec::new();
+    let mut current = end;
+    path.push(current);
+    while current != start {
+        if let Some(ref node) = node_field[current.y][current.x].parent {
+            current = node;
+            path.push(current);
+        }
+    }
+    path.reverse();
+    path
+}
+
+fn print_path<'a>(path: &'a [&'a Point]) {
+    path.iter()
+        .for_each(|point| println!("{} {}", point.x, point.y));
+}
+
 fn find_path(field: Field, start: Point, end: Point) -> usize {
     let max_y = field.len();
     let max_x = field[0].len();
@@ -78,6 +101,7 @@ fn find_path(field: Field, start: Point, end: Point) -> usize {
 
     while let Some(node) = heap.pop() {
         if node.pos == end {
+            print_path(&construct_path(&node_field, &start, &end));
             return node.cost;
         }
 
