@@ -46,6 +46,7 @@ int main(void) {
       check_candidate(max_cals, current_cals);
       current_cals = 0;
     } else {
+      errno = 0;
       current_cals += strtoul(line_buffer, &endptr, 10);
 
       if (errno != 0) {
