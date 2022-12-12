@@ -1,15 +1,13 @@
-cflags = -std=c99 -O3 -Werror -Wall -Wextra -Wconversion -Wunreachable-code -Wuninitialized -pedantic-errors -Wold-style-cast -Wno-error=unused-variable
-part1 = part1.c
-part2 = part2.c
+CFLAGS ?= -std=c99 -O3 -Werror -Wall -Wextra -Wconversion -Wunreachable-code -Wuninitialized -pedantic-errors -Wold-style-cast -Wno-error=unused-variable
+.PHONY = all clean
 
-all: $(part1)
-	clang $(cflags) $(part1) -o part1 & clang $(cflags) $(part2) -o part2
+all: part1 part2
 
-part1: $(part1)
-	clang $(cflags) $(part1) -o part1
+part1: part1.c
+	clang $(CFLAGS) $< -o $@
 
-part2: $(part1)
-	clang $(cflags) $(part2) -o part2
+part2: part2.c
+	clang $(CFLAGS) $< -o $@
 
 clean:
-	rm part1 part2
+	rm -f -- part1 part2
