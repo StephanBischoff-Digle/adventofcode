@@ -20,7 +20,7 @@ enum RPS find_shape(const enum RPS op, const enum Outcome outcome) {
   case Win:
     return (op + 1) % 3;
   case Lose:
-    return (op + 5) % 3;
+    return (op + 2) % 3;
   case Draw:
     return op;
   }
