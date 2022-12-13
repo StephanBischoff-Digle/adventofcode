@@ -60,7 +60,7 @@ impl Ord for Node {
     }
 }
 
-fn find_path(field: &Field, start: Point, end: Point) -> usize {
+fn find_path(field: &Field, startpoints: &[Point], end: Point) -> usize {
     let max_y = field.len();
     let max_x = field[0].len();
     let bottom_right = Point::new(max_x - 1, max_y - 1);
@@ -74,7 +74,9 @@ fn find_path(field: &Field, start: Point, end: Point) -> usize {
     }
 
     let mut heap = BinaryHeap::new();
-    heap.push(Node::new(start, 0, None));
+    startpoints
+        .iter()
+        .for_each(|point| heap.push(Node::new(*point, 0, None)));
 
     while let Some(node) = heap.pop() {
         if node.pos == end {
@@ -140,12 +142,5 @@ fn main() {
         return;
     };
 
-    let mut best = usize::MAX;
-    for (i, start) in startpoints.iter().enumerate() {
-        if i % 50 == 0 {
-            println!("{} of {}", i, startpoints.len());
-        }
-        best = best.min(find_path(&field, *start, end));
-    }
-    println!("{}", best);
+    println!("{}", find_path(&field, &startpoints, end));
 }
