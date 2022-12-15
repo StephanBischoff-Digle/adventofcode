@@ -24,7 +24,6 @@ uint_fast32_t score_rps(const enum RPS rps) {
   case Scissors:
     return 3;
   }
-  return 0;
 }
 
 uint_fast32_t score_outcome(const enum Outcome oc) {
@@ -36,7 +35,6 @@ uint_fast32_t score_outcome(const enum Outcome oc) {
   case Lose:
     return 0;
   }
-  return 0;
 }
 
 enum Outcome eval_rps(const enum RPS a, const enum RPS b) {
