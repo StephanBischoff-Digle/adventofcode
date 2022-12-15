@@ -47,7 +47,7 @@ def read_data() -> list[CLine]:
 
 
 def print_map(m: Map):
-    t = ['.', '#', 'o']
+    t = ['.', '#', '\033[32;1mo\033[0m']
     for y in m:
         print(''.join(list(map(lambda v: t[v], y))))
 
@@ -77,7 +77,7 @@ def bounding_box(lines: list[CLine]) -> tuple[tuple[int, int], int]:
         ys.extend([y for _, y in line])
 
     min_x = min(xs)-1
-    max_x = max(xs)+1
+    max_x = max(xs)+2
 
     max_y = max(ys)+1
     return ((min_x, max_x), max_y)
@@ -121,4 +121,5 @@ if __name__ == "__main__":
     while not done:
         m, done = simulation_step(m, injection)
     print(count_sand(m))
-    map_png(m, "filled_1.png")
+    # map_png(m, "filled_1.png")
+    print_map(m)
