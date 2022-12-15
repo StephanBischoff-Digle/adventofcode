@@ -44,23 +44,31 @@ def coverage_of_at(point: Point, r: int, row: int) -> list[int, int]:
 
 
 def find_missing(intervals: list[list[int, int]], hi=20) -> Optional[int]:
-    # merge intervals
+    # filter intervals that are out of bounds or clmap them to the bounds
     intervals = list(
         map(lambda x: [max(0, x[0]), min(hi, x[1])],
             filter(lambda x: x[0] <= hi and x[1] >= 0, intervals)))
+
+    # start with the lowest min
     intervals.sort()
-    # print(f"{intervals=}")
+
     stack = []
     stack.append(intervals[0])
     for i in intervals[1:]:
-        # print(f"{stack=}")
+        # check if the intervals are overlapping or adjecent
         if stack[-1][0]-1 <= i[0] and i[0] <= stack[-1][1]+1:
+            # update the max val of the biggest intervall
             stack[-1][1] = max(stack[-1][1], i[1])
         else:
+            # add a new disjunkt interval
             stack.append(i)
 
+    # check if more than one interval was found
+    # if so, take the smallest one's max and return the succesor
     if len(stack) > 1:
         return stack[0][1]+1
+
+    # all intervals overlapping, report None missing
     return None
 
 
