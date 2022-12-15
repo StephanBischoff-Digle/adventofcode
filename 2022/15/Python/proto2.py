@@ -3,6 +3,15 @@ from typing import Optional
 Point = tuple[int, int]
 
 
+def print_progress(prefix: str, width: int, i: int, hi: int) -> None:
+    n = int((width * i) // hi)
+    k = width - n
+    n_s = "#"*n
+    k_s = " "*k
+
+    print(f"\r{prefix}: [{n_s}{k_s}]  {i * 100/hi:5.1f}%", end="")
+
+
 def dist(xa: int, ya: int, xb: int, yb: int) -> int:
     return abs(xa-xb)+abs(ya-yb)
 
@@ -61,13 +70,14 @@ def main() -> None:
     # max_x = 20
     max_x = 4000000
     for y in range(max_x+1):
-        if y % 1000 == 0:
-            print(f"{y:7} -> {(y*100)//max_x:5}%")
+        if y % 100 == 0:
+            print_progress("merging interval", 50, y / 100, (max_x+1)/100)
         intervals = []
         for point, _, r in sensors:
             intervals.append(coverage_of_at(point, r, y))
         x = find_missing(intervals, max_x)
         if x is not None:
+            print()
             print(f"{x=} {y=}")
             print(f"{x*4000000 + y}")
             break
