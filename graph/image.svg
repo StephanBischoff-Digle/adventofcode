@@ -100,6 +100,8 @@
 <circle cx="270" cy="445" fill="#3e9c6d" r="7"/>
 <circle cx="250" cy="475" fill="#3e9c6d" r="7"/>
 <circle cx="270" cy="475" fill="#3e9c6d" r="7"/>
+<circle cx="250" cy="505" fill="#3e9c6d" r="7"/>
+<circle cx="270" cy="505" fill="#3e9c6d" r="7"/>
 <text fill="#F1EFDC" font-size="10" x="10" y="60">
 01
 </text>
