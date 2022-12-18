@@ -1,6 +1,7 @@
-*/**/target/
-*/**/Cargo.lock
-*/**/input
-*/**/.git/
+**/target/
+**/Cargo.lock
+**/input.txt
+**/test.txt
+**/.git/
 graph/Cargo.lock
 graph/targe/
