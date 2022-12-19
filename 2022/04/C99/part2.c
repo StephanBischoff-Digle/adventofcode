@@ -41,12 +41,9 @@ struct Sections parse_sections(char *line) {
   struct Range b = {.start = 0, .end = 0};
   char **endptr = &line;
   a.start = strtoul(line, endptr, 10);
-  char *lptr = *endptr;
-  a.end = strtoul(lptr + 1, endptr, 10);
-  lptr = *endptr;
-  b.start = strtoul(lptr + 1, endptr, 10);
-  lptr = *endptr;
-  b.end = strtoul(lptr + 1, endptr, 10);
+  a.end = strtoul(*endptr + 1, endptr, 10);
+  b.start = strtoul(*endptr + 1, endptr, 10);
+  b.end = strtoul(*endptr + 1, endptr, 10);
 
   struct Sections s = {.a = a, .b = b};
   return s;
