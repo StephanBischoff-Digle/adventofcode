@@ -9,11 +9,13 @@
 
 using u32 = uint32_t;
 
+/// Store the position of the value string and the value
 struct PosVal {
   size_t pos;
   u32 val;
 };
 
+/// Comparator for the PostVal-set, which determines order by position
 struct PosValComparator {
   bool operator()(const PosVal &a, const PosVal &b) const {
     return a.pos < b.pos;
@@ -27,6 +29,7 @@ int main(int argc, char *argv[]) {
     return 0;
   }
 
+  /// Lookup table for the strings and their corresponding values
   const std::pair<const char *, u32> words[] = {
       {"1", 1},     {"2", 2},     {"3", 3},    {"4", 4},    {"5", 5},
       {"6", 6},     {"7", 7},     {"8", 8},    {"9", 9},    {"one", 1},
