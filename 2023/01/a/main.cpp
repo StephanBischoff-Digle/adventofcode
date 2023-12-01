@@ -2,20 +2,21 @@
 #include <cstdint>
 #include <fstream>
 #include <iostream>
-#include <numeric>
+#include <span>
 #include <string>
-#include <vector>
 
 using u32 = uint32_t;
 
 int main(int argc, char *argv[]) {
+  auto args = std::span(argv, size_t(argc));
+
   // Read file
   if (argc == 1) {
-    std::cout << "Requires input file" << std::endl;
+    std::cout << "Requires input file\n";
     return 0;
   }
 
-  std::ifstream infile(argv[1]);
+  std::ifstream infile(args[1]);
 
   u32 accumulator = 0;
   std::string line;
@@ -23,12 +24,12 @@ int main(int argc, char *argv[]) {
     line.erase(std::remove_if(line.begin(), line.end(),
                               [](char c) { return !std::isdigit(c); }),
                line.end());
-    std::string buffer({line.front(), line.back()});
+    const std::string buffer({line.front(), line.back()});
 
     accumulator += std::stoi(buffer);
   }
 
-  std::cout << accumulator << std::endl;
+  std::cout << accumulator << "\n";
 
   return 0;
 }
