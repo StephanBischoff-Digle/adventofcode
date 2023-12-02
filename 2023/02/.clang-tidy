@@ -1,0 +1,3 @@
+---
+Checks: 'cert-*,performance-*,hicpp-*,cppcoreguidelines-*,-cppcoreguidelines-avoid-magic-numbers,misc-const-correctness,misc-misplaced-const'
+WarningsAsErrors: '*'
