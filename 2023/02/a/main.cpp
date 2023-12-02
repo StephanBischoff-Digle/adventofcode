@@ -54,7 +54,7 @@ Game parse_line(std::string &&line) {
   // parse all the sets
   size_t start = colon + 2;
   while (true) {
-    size_t set_end = l.find(';', start);
+    const size_t set_end = l.find(';', start);
     // std::cout << l.substr(start, end - start) << "\n";
 
     // parse the set
