@@ -4,4 +4,4 @@ project(day03)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_subdirectory(a)
-#add_subdirectory(b)
+add_subdirectory(b)
