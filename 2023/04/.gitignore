@@ -1,0 +1,4 @@
+build
+input.txt
+.cache
+compile_commands.json
