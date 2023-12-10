@@ -77,51 +77,51 @@ int main(int argc, char *argv[]) {
   //////////////////////////////////////////////////////////////////////////////////
   // Do the parsing
   const auto seed_to_soil = stbf::Section::parse(infile);
-  print_section(std::string{"seed_to_soil"}, seed_to_soil);
+  // print_section(std::string{"seed_to_soil"}, seed_to_soil);
 
   const auto soil_to_fertilizer = stbf::Section::parse(infile);
-  print_section(std::string{"soil_to_fertilizer"}, soil_to_fertilizer);
+  // print_section(std::string{"soil_to_fertilizer"}, soil_to_fertilizer);
 
   const auto fertilizer_to_water = stbf::Section::parse(infile);
-  print_section(std::string{"fertilizer_to_water"}, fertilizer_to_water);
+  // print_section(std::string{"fertilizer_to_water"}, fertilizer_to_water);
 
   const auto water_to_light = stbf::Section::parse(infile);
-  print_section(std::string{"water_to_light"}, water_to_light);
+  // print_section(std::string{"water_to_light"}, water_to_light);
 
   const auto light_to_temperature = stbf::Section::parse(infile);
-  print_section(std::string{"light_to_temperature"}, light_to_temperature);
+  // print_section(std::string{"light_to_temperature"}, light_to_temperature);
 
   const auto temperature_to_humidity = stbf::Section::parse(infile);
-  print_section(std::string{"temperature_to_humidity"},
-                temperature_to_humidity);
+  // print_section(std::string{"temperature_to_humidity"},
+  //              temperature_to_humidity);
 
   const auto humidity_to_location = stbf::Section::parse(infile);
-  print_section(std::string{"humidity_to_location"}, humidity_to_location);
+  // print_section(std::string{"humidity_to_location"}, humidity_to_location);
 
   //////////////////////////////////////////////////////////////////////////////////
   // Do the mapping
-  print_ranges(std::string{"seeds"}, seeds);
+  // print_ranges(std::string{"seeds"}, seeds);
 
   const auto soils = seed_to_soil.map(seeds);
-  print_ranges(std::string{"soils"}, soils);
+  // print_ranges(std::string{"soils"}, soils);
 
   const auto fertilizers = soil_to_fertilizer.map(soils);
-  print_ranges(std::string{"fertilizers"}, fertilizers);
+  // print_ranges(std::string{"fertilizers"}, fertilizers);
 
   const auto waters = fertilizer_to_water.map(fertilizers);
-  print_ranges(std::string{"waters"}, waters);
+  // print_ranges(std::string{"waters"}, waters);
 
   const auto lights = water_to_light.map(waters);
-  print_ranges(std::string{"lights"}, lights);
+  // print_ranges(std::string{"lights"}, lights);
 
   const auto temperatures = light_to_temperature.map(lights);
-  print_ranges(std::string{"temperatures"}, temperatures);
+  // print_ranges(std::string{"temperatures"}, temperatures);
 
   const auto humidities = temperature_to_humidity.map(temperatures);
-  print_ranges(std::string{"humidities"}, humidities);
+  // print_ranges(std::string{"humidities"}, humidities);
 
   auto locations = humidity_to_location.map(humidities);
-  print_ranges(std::string{"locations"}, locations);
+  // print_ranges(std::string{"locations"}, locations);
 
   std::sort(locations.begin(), locations.end());
   std::cout << "\nAnswer: " << locations.front().start << "\n";
