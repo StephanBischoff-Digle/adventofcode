@@ -20,7 +20,7 @@ fn main() -> Result<(), String> {
     };
 
     // Read the file, split by newline and remove the last, empty, line.
-    let lines: Vec<_> = buffer.split('\n').filter(|line| !line.is_empty()).collect();
+    let lines: Vec<_> = buffer.lines().filter(|line| !line.is_empty()).collect();
 
     // Convert the lines into two lists: left and right.
     let (left, right): (Vec<u64>, Vec<u64>) = lines.iter().map(|&line| split_to_pair(line)).unzip();

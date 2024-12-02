@@ -19,7 +19,7 @@ fn main() -> Result<(), String> {
         return Err("Failed to read input file".to_string());
     };
 
-    let lines: Vec<_> = buffer.split('\n').filter(|line| !line.is_empty()).collect();
+    let lines: Vec<_> = buffer.lines().filter(|line| !line.is_empty()).collect();
     let (mut left, mut right): (Vec<&str>, Vec<&str>) =
         lines.iter().map(|&line| split_to_pair(line)).unzip();
 
