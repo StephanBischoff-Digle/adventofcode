@@ -11,12 +11,11 @@ namespace stbi::advent {
     std::optional<int32_t> parse_line(std::string_view line) {
         const bool POSITIVE = (line[0] == 'R');
 
-        std::string_view cropped = line;
-        cropped.remove_prefix(1);
+        line.remove_prefix(1);
 
         int32_t amount{};
-        auto [ptr, ec] = std::from_chars(cropped.data(),
-                                         cropped.data() + cropped.size(),
+        auto [ptr, ec] = std::from_chars(line.data(),
+                                         line.data() + line.size(),
                                          amount);
         if (ec == std::errc()) {
             return  POSITIVE ? amount : -amount;
