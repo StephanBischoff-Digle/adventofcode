@@ -9,7 +9,7 @@
 
 namespace stbi::advent {
     std::optional<int32_t> parse_line(std::string_view line) {
-        const int32_t SIGN = (line[0] == 'L') ? -1 : +1;
+        const bool POSITIVE = (line[0] == 'R');
 
         std::string_view cropped = line;
         cropped.remove_prefix(1);
@@ -19,7 +19,7 @@ namespace stbi::advent {
                                          cropped.data() + cropped.size(),
                                          amount);
         if (ec == std::errc()) {
-            return SIGN * amount;
+            return  POSITIVE ? amount : -amount;
         } else if (ec == std::errc::invalid_argument) {
             std::cout << "This is not a number.\n";
         } else if (ec == std::errc::result_out_of_range) {
