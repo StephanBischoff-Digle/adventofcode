@@ -3,7 +3,6 @@
 
 #include <charconv>
 #include <cstdint>
-#include <iostream>
 #include <optional>
 #include <string_view>
 
@@ -14,20 +13,16 @@ namespace stbi::advent {
         line.remove_prefix(1);
 
         int32_t amount{};
-        auto [ptr, ec] = std::from_chars(line.data(),
-                                         line.data() + line.size(),
-                                         amount);
+        auto [_, ec] = std::from_chars(line.data(),
+                                       line.data() + line.size(),
+                                       amount);
         if (ec == std::errc()) {
-            return  POSITIVE ? amount : -amount;
-        } else if (ec == std::errc::invalid_argument) {
-            std::cout << "This is not a number.\n";
-        } else if (ec == std::errc::result_out_of_range) {
-            std::cout << "This number is larger than an int.\n";
+            return POSITIVE ? amount : -amount;
         }
         return std::nullopt;
     }
 
-    template<typename T>
+    template <typename T>
     T mod(T x, T base) {
         return (x % base + base) % base;
     }
