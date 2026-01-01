@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.17..4.1)
 project(aoc25_2 VERSION 1.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -24,6 +24,8 @@ FetchContent_Declare(
     GIT_TAG v3.11.0)
 FetchContent_MakeAvailable(Catch2)
 
+# ==================================================
+
 add_executable(aoc25_2_a src/main_1.cpp)
 target_include_directories(aoc25_2_a PRIVATE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -31,8 +33,16 @@ target_include_directories(aoc25_2_a PRIVATE
 set_project_warnings(aoc25_2_a)
 set_target_properties(aoc25_2_a PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
 
-# add_executable(aoc25_1_b src/main_2.cpp)
-# set_target_properties(aoc25_1_b PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
+# ==================================================
+
+add_executable(aoc25_2_b src/main_2.cpp)
+target_include_directories(aoc25_2_b PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>)
+set_project_warnings(aoc25_2_b)
+set_target_properties(aoc25_2_b PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
+
+# ==================================================
 
 add_executable(tests tests/tests.cpp)
 target_include_directories(tests PRIVATE
