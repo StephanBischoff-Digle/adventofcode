@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <optional>
@@ -7,22 +8,6 @@
 
 #include "interval.hpp"
 #include "parsing.hpp"
-
-/**
- * Checks a single chunk against a reference chunk via pairwise comparison.
- *
- * @param candidate The candidate chunk.
- * @param reference The reference chunk.
- * @returns True, if the chunks are pairwise equal, false otherwise.
- */
-[[nodiscard]] bool check_chunk(std::ranges::viewable_range auto&& candidate, std::ranges::viewable_range auto&& reference) {
-    for (auto const [l, ref] : std::views::zip(candidate, reference)) {
-        if (l != ref) {
-            return false;
-        }
-    }
-    return true;
-}
 
 /**
  * Checks whether the given number is a pattern as of the assignment.
@@ -45,14 +30,12 @@
         }
         auto const chunks        = str_x | std::views::chunk(width);
         auto const initial_chunk = chunks.front();
-        bool       pattern{ true };
-        // Check each chunk
-        for (auto const chunk : chunks) {
-            if (!check_chunk(chunk, initial_chunk)) {
-                pattern = false;
-                break;
-            }
-        }
+
+        // check if all chunks are equal to the first one
+        bool pattern = std::ranges::all_of(chunks, [&initial_chunk](const auto candidate) {
+                           return std::ranges::equal(candidate, initial_chunk);
+                       });
+
         // If we found a pattern, we can report
         if (pattern) {
             return true;
