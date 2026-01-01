@@ -5,3 +5,6 @@
 **/.git/
 graph/Cargo.lock
 graph/targe/
+**/build/
+**/.cache
+**/compile_commands.json
