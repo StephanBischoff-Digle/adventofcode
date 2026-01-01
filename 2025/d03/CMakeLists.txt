@@ -35,12 +35,12 @@ set_target_properties(aoc25_3_a PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
 
 # ==================================================
 
-# add_executable(aoc25_2_b src/main_2.cpp)
-# target_include_directories(aoc25_2_b PRIVATE
-#     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-#     $<INSTALL_INTERFACE:include>)
-# set_project_warnings(aoc25_2_b)
-# set_target_properties(aoc25_2_b PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
+add_executable(aoc25_3_b src/main_2.cpp)
+target_include_directories(aoc25_3_b PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>)
+set_project_warnings(aoc25_3_b)
+set_target_properties(aoc25_3_b PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
 
 # ==================================================
 
