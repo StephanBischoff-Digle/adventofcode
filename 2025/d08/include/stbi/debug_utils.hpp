@@ -1,25 +1,26 @@
 #pragma once
 
+#include <algorithm>
 #include <iostream>
 #include <span>
 
 namespace stbi::debug {
 
     template <typename T>
-    void print_vec(std::span<T> vec) {
+    void print_vec(std::span<const T> vec, std::span<const T> filter) {
         std::cout << "[ ";
         for (size_t i{ 0 }; i < vec.size() - 1; i++) {
-            if (vec[i] > 0) {
+            if (!std::ranges::contains(filter, vec[i])) {
                 std::cout << vec[i] << ", ";
             } else {
-                std::cout << " , ";
+                std::cout << "x, ";
             }
         }
 
-        if (vec[vec.size() - 1] > 0) {
+        if (!std::ranges::contains(filter, vec[vec.size() - 1])) {
             std::cout << vec[vec.size() - 1];
         } else {
-            std::cout << " ";
+            std::cout << "x";
         }
         std::cout << " ]";
     }
