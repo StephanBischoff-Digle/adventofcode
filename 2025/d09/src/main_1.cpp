@@ -19,7 +19,7 @@ struct Point {
      * Calculate the Manhattan-Distance
      */
     [[nodiscard]]
-    uint64_t norm(const Point& other) const {
+    uint64_t area(const Point& other) const {
         auto dx = stbi::udelta(other.x, x);
         auto dy = stbi::udelta(other.y, y);
         return dx + dy;
@@ -29,7 +29,8 @@ struct Point {
         size_t cnt{ 0 };
         auto   parts = sv | std::views::split(',');
         for (const auto&& part : parts) {
-            auto m_v = stbi::parse_int<uint64_t>({ part.begin(), static_cast<size_t>(std::ranges::distance(part)) });
+            auto m_v = stbi::parse_int<uint64_t>(
+                { part.begin(), static_cast<size_t>(std::ranges::distance(part)) });
             switch (cnt) {
             case 0:
                 x = m_v.value();
@@ -57,24 +58,6 @@ struct DistIdx {
     size_t   j;     //!< The index of a point inside a Point array.
 };
 
-/**
- * Merges two clusters `from` to `to`.
- *
- * @param cluster_list The cluster map. The index referes to a point, the value to the cluster-id.
- * @param from The cluster-id that should be replaced by `to`.
- * @param to The cluster-id that replaces `from`.
- */
-void cleanup_cluster(std::vector<uint32_t>& cluster_list, uint32_t from, uint32_t to) {
-    if (from == to) {
-        return;
-    }
-    for (size_t i{ 0 }; i < cluster_list.size(); i++) {
-        if (cluster_list[i] == from) {
-            cluster_list[i] = to;
-        }
-    }
-}
-
 int main(int argc, char* argv[]) {
     std::span<char*> args(argv, static_cast<size_t>(argc));
 
@@ -98,7 +81,7 @@ int main(int argc, char* argv[]) {
     distance_stack.reserve((points.size() * points.size()) / 2);
     for (size_t i{ 0 }; i < points.size(); i++) {
         for (size_t j{ i + 1 }; j < points.size(); j++) {
-            distance_stack.emplace_back(points[i].norm(points[j]), i, j);
+            distance_stack.emplace_back(points[i].area(points[j]), i, j);
         }
     }
 

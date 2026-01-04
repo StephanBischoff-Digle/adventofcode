@@ -19,7 +19,7 @@ IndentWrappedFunctionNames: false
 NamespaceIndentation: All
 
 # Line length
-ColumnLimit: 120
+ColumnLimit: 100
 
 # Alignment
 AlignAfterOpenBracket: Align
