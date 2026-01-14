@@ -132,6 +132,23 @@
 </text>
 <circle cx="550" cy="55" fill="#3e6d9c" r="7"/>
 <circle cx="570" cy="55" fill="#3e6d9c" r="7"/>
+<circle cx="550" cy="85" fill="#3e6d9c" r="7"/>
+<circle cx="570" cy="85" fill="#3e6d9c" r="7"/>
+<circle cx="550" cy="115" fill="#3e6d9c" r="7"/>
+<circle cx="570" cy="115" fill="#3e6d9c" r="7"/>
+<circle cx="550" cy="145" fill="#3e6d9c" r="7"/>
+<circle cx="570" cy="145" fill="#3e6d9c" r="7"/>
+<circle cx="550" cy="175" fill="#3e6d9c" r="7"/>
+<circle cx="570" cy="175" fill="#3e6d9c" r="7"/>
+<circle cx="550" cy="205" fill="#3e6d9c" r="7"/>
+<circle cx="570" cy="205" fill="#3e6d9c" r="7"/>
+<circle cx="550" cy="235" fill="#3e6d9c" r="7"/>
+<circle cx="570" cy="235" fill="#3e6d9c" r="7"/>
+<circle cx="550" cy="265" fill="#3e6d9c" r="7"/>
+<circle cx="570" cy="265" fill="#3e6d9c" r="7"/>
+<circle cx="550" cy="295" fill="#3e6d9c" r="7"/>
+<circle cx="570" cy="295" fill="#3e6d9c" r="7"/>
+<circle cx="550" cy="325" fill="#3e6d9c" r="7"/>
 <text fill="#F1EFDC" font-size="10" x="10" y="60">
 01
 </text>
